@@ -1,0 +1,1 @@
+# Simple Spotify Playlist API
