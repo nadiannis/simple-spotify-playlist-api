@@ -44,7 +44,7 @@ const get = (req, res) => {
       .json({ success: true, message: 'Song retrieved successfully', data });
   } catch (error) {
     res
-      .status(httpStatus.NOT_FOUND)
+      .status(error.statusCode)
       .json({ success: false, message: error.message });
   }
 };
@@ -61,7 +61,7 @@ const update = (req, res) => {
       .json({ success: true, message: 'Song updated successfully', data });
   } catch (error) {
     res
-      .status(httpStatus.NOT_FOUND)
+      .status(error.statusCode)
       .json({ success: false, message: error.message });
   }
 };

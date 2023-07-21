@@ -1,4 +1,5 @@
 const path = require('path');
+const httpStatus = require('http-status');
 const { load, save } = require('../utils/data');
 const Song = require('../models/song.model');
 
@@ -24,7 +25,9 @@ const get = (songId) => {
   const song = songs.find((song) => song.id === songId);
 
   if (!song) {
-    throw new Error('Song not found');
+    const error = new Error('Song not found');
+    error.statusCode = httpStatus.NOT_FOUND;
+    throw error;
   }
 
   return song;
@@ -35,7 +38,9 @@ const update = (songData, songId) => {
   const instance = songs.find((song) => song.id === songId);
 
   if (!instance) {
-    throw new Error('Song not found');
+    const error = new Error('Song not found');
+    error.statusCode = httpStatus.NOT_FOUND;
+    throw error;
   }
 
   instance.title = songData.title || instance.title;
