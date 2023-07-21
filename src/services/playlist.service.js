@@ -18,7 +18,7 @@ const getAll = () => {
     return {
       id: playlist.id,
       name: playlist.name,
-      tracks: playlistSongs,
+      songs: playlistSongs,
     };
   });
 
