@@ -11,20 +11,22 @@ const getAllSongs = (req, res) => {
 
     if (data.length === 0) {
       res.status(httpStatus.OK).json({
-        success: true,
+        status: 'success',
         message: 'There are no songs available in the playlist',
         data,
       });
       return;
     }
 
-    res
-      .status(httpStatus.OK)
-      .json({ success: true, message: 'Songs retrieved successfully', data });
+    res.status(httpStatus.OK).json({
+      status: 'success',
+      message: 'Songs retrieved successfully',
+      data,
+    });
   } catch (error) {
     res
       .status(error.statusCode)
-      .json({ success: false, message: error.message });
+      .json({ status: 'error', message: error.message });
   }
 };
 
@@ -35,7 +37,7 @@ const addSong = (req, res) => {
   if (!songId) {
     res
       .status(httpStatus.BAD_REQUEST)
-      .json({ success: false, message: 'Invalid request body' });
+      .json({ status: 'error', message: 'Invalid request body' });
     return;
   }
 
@@ -43,14 +45,14 @@ const addSong = (req, res) => {
     const data = playlistSongService.addSong(songId, playlistId);
 
     res.status(httpStatus.CREATED).json({
-      success: true,
+      status: 'success',
       message: 'Song added to the playlist successfully',
       data,
     });
   } catch (error) {
     res
       .status(error.statusCode)
-      .json({ success: false, message: error.message });
+      .json({ status: 'error', message: error.message });
   }
 };
 
@@ -61,7 +63,7 @@ const removeSong = (req, res) => {
     const isSuccess = playlistSongService.removeSong(songId, playlistId);
     if (!isSuccess) {
       res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
-        success: false,
+        status: 'error',
         message: 'Failed to delete song from the playlist',
       });
       return;
@@ -71,7 +73,7 @@ const removeSong = (req, res) => {
   } catch (error) {
     res
       .status(error.statusCode)
-      .json({ success: false, message: error.message });
+      .json({ status: 'error', message: error.message });
   }
 };
 
@@ -86,21 +88,21 @@ const playSong = (req, res) => {
     if (index === NOT_FOUND_VALUE) {
       res
         .status(httpStatus.NOT_FOUND)
-        .json({ success: false, message: 'Song not found in the playlist' });
+        .json({ status: 'error', message: 'Song not found in the playlist' });
       return;
     }
 
     const song = songService.get(songId);
     songService.update({ playCount: song.playCount + 1 }, songId);
     res.status(httpStatus.OK).json({
-      success: true,
+      status: 'success',
       message: 'Song played successfully',
       data: song.url,
     });
   } catch (error) {
     res
       .status(error.statusCode)
-      .json({ success: false, message: error.message });
+      .json({ status: 'error', message: error.message });
   }
 };
 

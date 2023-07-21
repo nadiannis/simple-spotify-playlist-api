@@ -6,7 +6,7 @@ const getAll = (req, res) => {
 
   if (data.length === 0) {
     res.status(httpStatus.OK).json({
-      success: true,
+      status: 'success',
       message: 'There are no playlists available',
       data,
     });
@@ -15,7 +15,11 @@ const getAll = (req, res) => {
 
   res
     .status(httpStatus.OK)
-    .json({ success: true, message: 'Playlists retrieved successfully', data });
+    .json({
+      status: 'success',
+      message: 'Playlists retrieved successfully',
+      data,
+    });
 };
 
 const create = (req, res) => {
@@ -24,7 +28,7 @@ const create = (req, res) => {
   if (!name) {
     res
       .status(httpStatus.BAD_REQUEST)
-      .json({ success: false, message: 'Invalid request body' });
+      .json({ status: 'error', message: 'Invalid request body' });
     return;
   }
 
@@ -32,7 +36,11 @@ const create = (req, res) => {
 
   res
     .status(httpStatus.CREATED)
-    .json({ success: true, message: 'Playlist created successfully', data });
+    .json({
+      status: 'success',
+      message: 'Playlist created successfully',
+      data,
+    });
 };
 
 const get = (req, res) => {
@@ -42,14 +50,14 @@ const get = (req, res) => {
     const data = playlistService.get(playlistId);
 
     res.status(httpStatus.OK).json({
-      success: true,
+      status: 'success',
       message: 'Playlist retrieved successfully',
       data,
     });
   } catch (error) {
     res
       .status(error.statusCode)
-      .json({ success: false, message: error.message });
+      .json({ status: 'error', message: error.message });
   }
 };
 
@@ -62,11 +70,15 @@ const update = (req, res) => {
 
     res
       .status(httpStatus.OK)
-      .json({ success: true, message: 'Playlist updated successfully', data });
+      .json({
+        status: 'success',
+        message: 'Playlist updated successfully',
+        data,
+      });
   } catch (error) {
     res
       .status(error.statusCode)
-      .json({ success: false, message: error.message });
+      .json({ status: 'error', message: error.message });
   }
 };
 
@@ -78,7 +90,7 @@ const remove = (req, res) => {
     if (!isSuccess) {
       res
         .status(httpStatus.INTERNAL_SERVER_ERROR)
-        .json({ success: false, message: 'Failed to delete playlist' });
+        .json({ status: 'error', message: 'Failed to delete playlist' });
       return;
     }
 
@@ -86,7 +98,7 @@ const remove = (req, res) => {
   } catch (error) {
     res
       .status(error.statusCode)
-      .json({ success: false, message: error.message });
+      .json({ status: 'error', message: error.message });
   }
 };
 

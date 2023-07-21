@@ -5,15 +5,17 @@ const getAll = (req, res) => {
   const data = songService.getAll();
 
   if (data.length === 0) {
-    res
-      .status(httpStatus.OK)
-      .json({ success: true, message: 'There are no songs available', data });
+    res.status(httpStatus.OK).json({
+      status: 'success',
+      message: 'There are no songs available',
+      data,
+    });
     return;
   }
 
   res
     .status(httpStatus.OK)
-    .json({ success: true, message: 'Songs retrieved successfully', data });
+    .json({ status: 'success', message: 'Songs retrieved successfully', data });
 };
 
 const create = (req, res) => {
@@ -22,7 +24,7 @@ const create = (req, res) => {
   if (!title || !artists || !url) {
     res
       .status(httpStatus.BAD_REQUEST)
-      .json({ success: false, message: 'Invalid request body' });
+      .json({ status: 'error', message: 'Invalid request body' });
     return;
   }
 
@@ -30,7 +32,7 @@ const create = (req, res) => {
 
   res
     .status(httpStatus.CREATED)
-    .json({ success: true, message: 'Song created successfully', data });
+    .json({ status: 'success', message: 'Song created successfully', data });
 };
 
 const get = (req, res) => {
@@ -39,13 +41,15 @@ const get = (req, res) => {
 
     const data = songService.get(songId);
 
-    res
-      .status(httpStatus.OK)
-      .json({ success: true, message: 'Song retrieved successfully', data });
+    res.status(httpStatus.OK).json({
+      status: 'success',
+      message: 'Song retrieved successfully',
+      data,
+    });
   } catch (error) {
     res
       .status(error.statusCode)
-      .json({ success: false, message: error.message });
+      .json({ status: 'error', message: error.message });
   }
 };
 
@@ -58,11 +62,11 @@ const update = (req, res) => {
 
     res
       .status(httpStatus.OK)
-      .json({ success: true, message: 'Song updated successfully', data });
+      .json({ status: 'success', message: 'Song updated successfully', data });
   } catch (error) {
     res
       .status(error.statusCode)
-      .json({ success: false, message: error.message });
+      .json({ status: 'error', message: error.message });
   }
 };
 
@@ -71,15 +75,17 @@ const getSongsByMostPlayed = (req, res) => {
   const data = songs.sort((a, b) => b.playCount - a.playCount);
 
   if (data.length === 0) {
-    res
-      .status(httpStatus.OK)
-      .json({ success: true, message: 'There are no songs available', data });
+    res.status(httpStatus.OK).json({
+      status: 'success',
+      message: 'There are no songs available',
+      data,
+    });
     return;
   }
 
   res
     .status(httpStatus.OK)
-    .json({ success: true, message: 'Songs retrieved successfully', data });
+    .json({ status: 'success', message: 'Songs retrieved successfully', data });
 };
 
 const playSong = (req, res) => {
@@ -90,14 +96,14 @@ const playSong = (req, res) => {
 
     songService.update({ playCount: song.playCount + 1 }, songId);
     res.status(httpStatus.OK).json({
-      success: true,
+      status: 'success',
       message: 'Song played successfully',
       data: song.url,
     });
   } catch (error) {
     res
       .status(error.statusCode)
-      .json({ success: false, message: error.message });
+      .json({ status: 'error', message: error.message });
   }
 };
 
