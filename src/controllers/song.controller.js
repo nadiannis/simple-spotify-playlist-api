@@ -82,10 +82,30 @@ const getSongsByMostPlayed = (req, res) => {
     .json({ success: true, message: 'Songs retrieved successfully', data });
 };
 
+const playSong = (req, res) => {
+  const { songId } = req.params;
+
+  try {
+    const song = songService.get(songId);
+
+    songService.update({ playCount: song.playCount + 1 }, songId);
+    res.status(httpStatus.OK).json({
+      success: true,
+      message: 'Song played successfully',
+      data: song.url,
+    });
+  } catch (error) {
+    res
+      .status(error.statusCode)
+      .json({ success: false, message: error.message });
+  }
+};
+
 module.exports = {
   getAll,
   create,
   get,
   update,
   getSongsByMostPlayed,
+  playSong,
 };

@@ -7,4 +7,6 @@ router.route('/').get(songController.getAll).post(songController.create);
 
 router.route('/:songId').get(songController.get).put(songController.update);
 
+router.get('/:songId/play', songController.playSong);
+
 module.exports = router;
