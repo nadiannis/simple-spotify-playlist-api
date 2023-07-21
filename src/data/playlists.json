@@ -1,0 +1,15 @@
+[
+  {
+    "id": "cae5dcbb-2601-4922-a888-4896009b3c2a",
+    "name": "My Playlist",
+    "songs": []
+  },
+  {
+    "id": "718793b9-e7eb-4ba3-92f0-24803d4df4e0",
+    "name": "My Favorites",
+    "songs": [
+      "a8747685-6790-4c25-ba87-7500f462e780",
+      "90ce607b-aa36-418a-b382-67bfd2c26adf"
+    ]
+  }
+]
